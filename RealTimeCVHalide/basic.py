@@ -21,31 +21,17 @@ while True:
         print("Error: Failed to capture frame.")
         break
 
-    # Convert the frame to greyscale using the naive filter
-    # grey_frame = greyscale.greyscale_naive(frame)
-    # Apply blur filter to the frame
-    # blurred_frame = blur.blur_naive(frame, kernel_size=5)
+    # Detect hands and get handedness, landmarks, and gestures
+    hand_detected_frame, hand_info = handDetection.detect_hands(frame)
 
-    # # Convert the frame to greyscale using OpenCV's BGR to Grayscale conversion
-    # grey_frame = greyscale.greyscale_bgr_cv(frame)
-    # # Apply blur filter using OpenCV
-    # blurred_frame = blur.blur_bgr_cv(frame, kernel_size=5)
-    # # Apply pixelation filter to the frame
-    # pixelated_frame = pixelate.pixelate_cv2(frame, pixel_size=10)
+    # Display detected hand information
+    for hand in hand_info:
+        print(f"Hand: {hand['handedness']}")
+        print(f"Gesture: {hand['gesture']}")
+        # print(f"Landmarks: {hand['landmarks']}")
 
-    hand_detected_frame = handDetection.detect_hands(frame)
-    elapsed = timeit.timeit(
-        "handDetection.detect_hands(frame)",
-        globals=globals(),
-        number=1,
-    )
-    print(f"hand detection time: {elapsed:.4f} seconds")
-
-    # Display the original frame and the greyscale frame and blurred frame
+    # Display the original frame and the hand detection frame
     cv2.imshow("Original Webcam Feed", frame)
-    # cv2.imshow("Greyscale Webcam Feed", grey_frame)
-    # cv2.imshow("Blurred Webcam Feed", blurred_frame)
-    # cv2.imshow("Pixelated Webcam Feed", pixelated_frame)
     cv2.imshow("Hand Detection Webcam Feed", hand_detected_frame)
 
     # Exit on 'q' key
