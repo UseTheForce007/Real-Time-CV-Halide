@@ -32,9 +32,14 @@ def classify_gesture(landmarks):
     ):
         return "Two Fingers"
 
-    # Check for closed fist gesture (all fingers curled)
-    if all(landmarks[i][1] > landmarks[i - 2][1] for i in [4, 8, 12, 16, 20]):
-        return "Closed Fist"
+    # Check for three fingers gesture (index, middle, and ring fingers extended)
+    if (
+        landmarks[8][1] < landmarks[6][1]
+        and landmarks[12][1] < landmarks[10][1]
+        and landmarks[16][1] < landmarks[14][1]
+        and landmarks[20][1] > landmarks[18][1]
+    ):
+        return "Three Fingers"
 
     # Check for open hand gesture (all fingers extended)
     if all(landmarks[i][1] < landmarks[i - 2][1] for i in [4, 8, 12, 16, 20]):

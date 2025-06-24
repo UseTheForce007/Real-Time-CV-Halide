@@ -17,7 +17,7 @@ def generate_roi_with_filter(image, landmarks, margin=20, filter_function=None):
     height, width, _ = image.shape
 
     # Define the indices for the fingertips
-    fingertip_indices = [8, 12]  # Thumb, Index, Middle, Ring, Pinky
+    fingertip_indices = [8]  #  Index
 
     for idx in fingertip_indices:
         x = int(landmarks[idx][0] * width)
@@ -26,6 +26,17 @@ def generate_roi_with_filter(image, landmarks, margin=20, filter_function=None):
         # Define the ROI rectangle
         top_left = (max(0, x - margin), max(0, y - margin))
         bottom_right = (min(width, x + margin), min(height, y + margin))
+
+        # Calculate ROI dimensions
+        roi_width = bottom_right[0] - top_left[0]
+        roi_height = bottom_right[1] - top_left[1]
+
+        # Skip ROIs that are too small
+        if roi_width < 10 or roi_height < 10:
+            print(
+                f"Warning: ROI too small (width={roi_width}, height={roi_height}). Skipping..."
+            )
+            continue
 
         # Extract the ROI
         roi = image[top_left[1] : bottom_right[1], top_left[0] : bottom_right[0]]
