@@ -27,7 +27,6 @@ while True:
     if not hand_info:
         continue
     elif hand_info:
-        print(f"Shape of frame: {frame.shape}")
         # Apply filters based on detected hand gestures
         for hand in hand_info:
             if hand["handedness"] == "Left":  # Process only the left hand
