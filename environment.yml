@@ -1,0 +1,14 @@
+name: realtime_cv_halide
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11 # Adjust based on MediaPipe compatibility
+  - numpy
+  - opencv
+  - matplotlib # Optional
+  - scipy # Optional
+  - pybind11
+
+  - pip
+  - uv
